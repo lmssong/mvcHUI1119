@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>
+
+    </title>
+    <meta charset="urf-8" />
+    <meta  name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/bootstraptable/bootstrap-table.min.css" />
+
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="~/Content/bootstraptable/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="~/Content/bootstraptable/locale/bootstrap-table-zh-CN.js"></script>
+
+    <script type="text/javascript" src="~/Content/H-ui/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="~/Content/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
+    
+    
+    <script type="text/javascript">
+
+       
+        $(function() {
+
+
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+
+            //InitMainTable();
+
+        })
+
+        var TableInit = function () {
+            var oTableInit = new Object();
+            var queryUrl = '/Menu/GetMenuInfoList?rnd=' + Math.random();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#ArbetTable').bootstrapTable({
+                    url: queryUrl,         //请求后台的URL（*）
+                    method: 'POST',                      //请求方式（*）
+                    toolbar: '#toolbar',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: false,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    contentType: "application/x-www-form-urlencoded",
+                    strictSearch: true,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    //height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "no",                     //每一行的唯一标识，一般为主键列
+                    showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    paginationVAlign: 'top',
+                    columns: [
+                        {
+                            field: 'KID',
+                            title: 'ID'
+                        }, {
+                            field: 'Menu_No',
+                            title: '菜单编号',
+                            sortable: true
+                        }, {
+                            field: 'Menu_Name',
+                            title: '菜单名称',
+                            sortable: true
+                        }, {
+                            field: 'Menu_Level',
+                            title: '菜单级别',
+                            sortable: true
+                        }, {
+                            field: 'Menu_ParentId',
+                            title: '父级ID'
+                        }, {
+                            field: 'Menu_Remark',
+                            title: '菜单备注'
+                        }, {
+                            field: 'Menu_Url',
+                            title: '模块地址',
+                            sortable: true
+                        }, {
+                            field: 'Menu_Icon',
+                            title: '菜单图标'
+                        },
+                        {
+                            field: 'operate',
+                            title: '操作',
+                            formatter: operateFormatter //自定义方法，添加操作按钮
+                        },
+                    ],
+                    //rowStyle: function (row, index) {
+                    //    var classesArr = ['success', 'info'];
+                    //    var strclass = "";
+                    //    if (index % 2 === 0) {//偶数行
+                    //        strclass = classesArr[0];
+                    //    } else {//奇数行
+                    //        strclass = classesArr[1];
+                    //    }
+                    //    return { classes: strclass };
+                    //},//隔行变色
+                });
+
+            };
+
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                //页面请求参数
+                var temp = {
+                    limit: params.limit,  
+                    offset: params.offset,
+                    search: params.search
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        function operateFormatter(value, row, index) {//赋予的参数
+            return [
+                '<a class="btn active" href="#" onclick="admin_role_edit(\'菜单编辑\',\'/Menu/Edit?id=' + row.KID + '\',\'800\');">编辑</a>',
+                '<a class="btn active" href="#" onclick="dataItemDelete(\'' + row.KID + '\');">删除</a>'
+            ].join('');
+        }
+
+        function dataItemEdit(value) {
+            layer.confirm('確定刪除？', { icon: 3 }, function (index) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Menu/MenuDelete?rad=' + Math.random(),
+                    data: { 'id': value },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data) {
+                            layer.msg('删除成功！', {
+                                icon: 1,
+                                anim: 5,
+                                shade: 0.4
+                            });
+                        } else {
+                            layer.msg('删除失败！', {
+                                icon: 2,
+                                anim: 5,
+                                shade: 0.4
+                            });
+                        }
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            });
+        }
+
+        function dataItemDelete(value) {
+            layer.confirm('確定刪除？', { icon: 3 }, function (index) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Menu/MenuDelete?rad=' + Math.random(),
+                    data: { 'id': value },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data) {
+                            layer.msg('删除成功！', {
+                                icon: 1,
+                                anim: 5,
+                                shade: 0.4
+                            });
+                        } else {
+                            layer.msg('删除失败！', {
+                                icon: 2,
+                                anim: 5,
+                                shade: 0.4
+                            });
+                        }
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            });
+        }
+        
+
+        /*管理员-角色-编辑*/
+        function admin_role_edit(title, url, w, h) {
+            layer_show(title, url, w, h);
+        }
+
+    </script>
+</head>
+<body>
+    <div id="toolbar" class="btn-group">
+
+        <div class="cl pd-5 bg-1 bk-gray"> 
+        <span class="l"> 
+            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+            <a class="btn btn-primary radius" href="javascript:;" onclick="admin_role_edit('菜单添加','/Menu/Edit','800')"><i class="Hui-iconfont">&#xe600;</i> 添加菜单</a> 
+            </span>
+        </div>
+    </div>
+
+
+    <table id="ArbetTable"></table>
+</body>
+
+
+</html>

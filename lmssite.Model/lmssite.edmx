@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LmsSiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="M_MENU">
+          <Key>
+            <PropertyRef Name="KID" />
+          </Key>
+          <Property Name="KID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Menu_No" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Menu_Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Menu_Level" Type="int" Nullable="false" />
+          <Property Name="Menu_ParentId" Type="uniqueidentifier" />
+          <Property Name="Menu_Remark" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Is_Delete" Type="bit" Nullable="false" />
+          <Property Name="Crt_Code" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Crt_Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Crt_Time" Type="datetime" Nullable="false" />
+          <Property Name="Mdf_Code" Type="nvarchar" MaxLength="500" />
+          <Property Name="Mdf_Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Mdf_Time" Type="datetime" />
+          <Property Name="Menu_Url" Type="nvarchar" MaxLength="500" />
+          <Property Name="Menu_Icon" Type="nvarchar" MaxLength="500" />
+          <Property Name="VID" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="LmsSiteModelStoreContainer">
+          <EntitySet Name="M_MENU" EntityType="Self.M_MENU" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LmsSiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="M_MENU">
+          <Key>
+            <PropertyRef Name="KID" />
+          </Key>
+          <Property Name="KID" Type="Guid" Nullable="false" />
+          <Property Name="Menu_No" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Menu_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Menu_Level" Type="Int32" Nullable="false" />
+          <Property Name="Menu_ParentId" Type="Guid" />
+          <Property Name="Menu_Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Is_Delete" Type="Boolean" Nullable="false" />
+          <Property Name="Crt_Code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Crt_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Crt_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Mdf_Code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Mdf_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Mdf_Time" Type="DateTime" Precision="3" />
+          <Property Name="Menu_Url" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Menu_Icon" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VID" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityContainer Name="LmsSiteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="M_MENU" EntityType="Self.M_MENU" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LmsSiteModelStoreContainer" CdmEntityContainer="LmsSiteEntities">
+          <EntitySetMapping Name="M_MENU">
+            <EntityTypeMapping TypeName="LmsSiteModel.M_MENU">
+              <MappingFragment StoreEntitySet="M_MENU">
+                <ScalarProperty Name="KID" ColumnName="KID" />
+                <ScalarProperty Name="Menu_No" ColumnName="Menu_No" />
+                <ScalarProperty Name="Menu_Name" ColumnName="Menu_Name" />
+                <ScalarProperty Name="Menu_Level" ColumnName="Menu_Level" />
+                <ScalarProperty Name="Menu_ParentId" ColumnName="Menu_ParentId" />
+                <ScalarProperty Name="Menu_Remark" ColumnName="Menu_Remark" />
+                <ScalarProperty Name="Is_Delete" ColumnName="Is_Delete" />
+                <ScalarProperty Name="Crt_Code" ColumnName="Crt_Code" />
+                <ScalarProperty Name="Crt_Name" ColumnName="Crt_Name" />
+                <ScalarProperty Name="Crt_Time" ColumnName="Crt_Time" />
+                <ScalarProperty Name="Mdf_Code" ColumnName="Mdf_Code" />
+                <ScalarProperty Name="Mdf_Name" ColumnName="Mdf_Name" />
+                <ScalarProperty Name="Mdf_Time" ColumnName="Mdf_Time" />
+                <ScalarProperty Name="Menu_Url" ColumnName="Menu_Url" />
+                <ScalarProperty Name="Menu_Icon" ColumnName="Menu_Icon" />
+                <ScalarProperty Name="VID" ColumnName="VID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
